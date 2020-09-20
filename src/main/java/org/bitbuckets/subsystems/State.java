@@ -1,11 +1,24 @@
 package org.bitbuckets.subsystems;
 
-public interface State {
-    void initialize();
+public abstract class State {
+    protected final Subsystem subsystem;
 
-    void execute();
+    public State(Subsystem subsystem) {
+        this.subsystem = subsystem;
+    }
 
-    boolean isFinished();
+    public void initialize() {
+        System.out.println(subsystem.getClass().getSimpleName() + ": Entering " + getClass().getSimpleName());
+    }
 
-    void end();
+    public void execute() {
+        System.out.println(subsystem.getClass().getSimpleName() + ": Executing " + getClass().getSimpleName());
+    }
+
+    abstract public boolean isFinished();
+
+    public void end() {
+        System.out.println(subsystem.getClass().getSimpleName() + ": Ending " + getClass().getSimpleName());
+    }
+
 }

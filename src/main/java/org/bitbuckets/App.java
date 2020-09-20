@@ -3,23 +3,33 @@
  */
 package org.bitbuckets;
 
-import org.bitbuckets.subsystems.helloworld.HelloWorldSubsystem;
+import org.bitbuckets.subsystems.arm.ArmSubsystem;
+import org.bitbuckets.subsystems.elevator.ElevatorSubsystem;
 
 public class App {
 
     public static void main(String[] args) {
-        HelloWorldSubsystem helloWorldSubsystem = new HelloWorldSubsystem();
+        ArmSubsystem armSubsystem = new ArmSubsystem();
+        ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem(armSubsystem);
 
         // start off the state machine
-        helloWorldSubsystem.periodic();
-
-        // trigger a new state
-        helloWorldSubsystem.triggerHelloWorld();
-        helloWorldSubsystem.periodic();
+        armSubsystem.periodic();
+        elevatorSubsystem.periodic();
         
-        // we are idle now
-        helloWorldSubsystem.periodic();
-        helloWorldSubsystem.periodic();
-        helloWorldSubsystem.periodic();
+        // close the arm 
+        armSubsystem.closeArm();
+
+        // run the subsystems
+        armSubsystem.periodic();
+        elevatorSubsystem.periodic();
+
+        // open the arm 
+        armSubsystem.openArm();
+
+        // run the subsystems
+        armSubsystem.periodic();
+        elevatorSubsystem.periodic();
+
     }
+
 }
